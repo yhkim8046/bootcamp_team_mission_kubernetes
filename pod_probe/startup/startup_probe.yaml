@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: startup-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: startup-test
+  template:
+    metadata:
+      labels:
+        app: startup-test
+    spec:
+      containers:
+        - name: startup-container
+          image: nginx
+          command: ["/bin/sh", "-c", "sleep 40; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          startupProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 5  
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60  
+            periodSeconds: 10

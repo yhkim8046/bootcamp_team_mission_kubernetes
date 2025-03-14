@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-reader-test
+  namespace: team-mission
+spec:
+  serviceAccount: pod-reader
+  containers:
+  - name: container
+    image: bitnami/kubectl
+    command: ["sleep","3600"]

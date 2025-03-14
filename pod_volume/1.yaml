@@ -1,0 +1,17 @@
+#팀미션 파드 볼륨
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume
+spec:
+  containers:
+    - name: volume-test
+      image: busybox
+      command: [ "sleep", "3600" ]  # 컨테이너 유지
+      volumeMounts:
+        - mountPath: "/test"
+          name: test-volume
+  volumes:
+    - name: test-volume
+      emptyDir: {}
